@@ -1,0 +1,84 @@
+	body {
+		font-family: "Verdana", Times, serif;
+	}
+	
+	#logotop {
+		padding:15px;
+		display: block;
+		margin: auto;
+		width:200px;
+	}
+	
+	table, th, td {
+		border: 1px solid black;
+		border-collapse: collapse;
+		padding:5px;
+		height:30px;
+		text-align: center;
+	}
+	
+	td:hover {
+		background-color: #CCE5FF;
+	}
+	
+	#mainrow {
+		color:#ffffff;
+		background-color:#808080;
+	}
+	
+	.buttonsubmit {
+		background-color: #79DD05;
+		border: none;
+		color: white;
+		text-align: center;
+		display: block;
+		margin: auto;
+		font-size: 26px;
+		cursor: pointer;
+		float: right;
+		width:40%;
+		height:50px;
+	}
+	
+	.heure {
+		background-color:#C0C0C0;
+	}
+	
+	#attentionmsg {
+		margin-top:5px;
+		color: red;
+		display: block;
+		text-align: center;
+		font-size:20px;
+	}
+	
+	#framestreamer, #framejeux {
+		margin:10px;
+		padding:15px;
+		background-color:#E0E0E0;
+		border: 2px solid black;
+		width:40%;
+	}
+	
+	#framestreamer {
+		float: left;
+		display:inline-block;
+	}
+	
+	#framejeux {
+		float: right;
+		display:inline-block;
+	}
+	
+	.titleframe {
+		text-decoration: underline;
+		font-size:30px;
+		text-align:center;
+		display:block;
+	}
+	
+	.elementedit {
+		font-size:18px;
+		margin: auto;
+		width:50%;
+	}
