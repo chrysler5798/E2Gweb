@@ -22,7 +22,7 @@
 				echo "</select>
 				<br/>
 				<br/>";
-				if(montrerSteamer(0, $i,$heure) == "LIBRE")
+				if($nomstreamer == "LIBRE")
 				{
 					echo '<span style="color:white">Jeu :</span>';
 				} else {
@@ -135,12 +135,7 @@
 			$result = $conn->query($sqlListeStreamer);
 			echo '<div id="legendeframe">';
 			while ($row = $result->fetch_assoc()) {
-				if($row['nom'] == "LIBRE")
-				{
-					echo '<span class="legendestream" style="color:white;background-color:'.$row['couleur'].'">' . $row['nom'] ."</span>";
-				} else {
-					echo '<span class="legendestream" style="background-color:'.$row['couleur'].'">' . $row['nom'] ."</span>";
-				}
+				echo '<span class="legendestream">' . $row['nom'] .'<div style="background-color:'.$row['couleur'].';height:25px;margin-top:5px;"></div></span>';
 			}
 			echo '</div>';
 	?>

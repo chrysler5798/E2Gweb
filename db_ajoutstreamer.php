@@ -2,7 +2,6 @@
 
 include 'db_connect.php';	 
 
-// Check connection
 if ($conn->connect_error)
 {
     die("Erreur de connexion a la DB: " . $conn->connect_error);

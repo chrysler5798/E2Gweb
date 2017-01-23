@@ -7,60 +7,112 @@ if ($conn->connect_error)
     die("Erreur de connexion a la DB: " . $conn->connect_error);
 } 
 
-$heures = array(809, 910, 1011, 1112, 1213, 1314, 1415, 1516, 1617, 1718, 1819, 1920, 2021, 2122, 2223, 2300);
+$heuresbrut = array(809, 910, 1011, 1112, 1213, 1314, 1415, 1516, 1617, 1718, 1819, 1920, 2021, 2122, 2223, 2300);
+$heures = array("08H-09H","09H-10H","10H-11H","11H-12H","12H-13H","13H-14H","14H-15H","15H-16H","16H-17H","17H-18H","18H-19H","19H-20H","20H-21H","21H-22H","22H-23H","23H-00H");
+$txt = "";
 
 for($i = 1; $i <= 7; $i++)
 {
 	for($j = 0; $j < 16; $j++)
 	{
-		$heure = $heures[$j];
+		$heure = $heuresbrut[$j];
 		$streamer = $_POST[$i .'str'. $heure];
 		$jeu = $_POST[$i .'jeu'. $heure];
+		
 		switch ($i)
 		{
 			case 1:
-				$sql = "UPDATE planning_lundi SET streamer=('$streamer') WHERE heure=('$heure')";
-				$sql2 = "UPDATE planning_lundi SET jeu=('$jeu') WHERE heure=('$heure')";
+				$planning = "planning_lundi";
+				$today = "monday";
+				$auj = "lundi ";
 				break;
-				
+			
 			case 2:
-				$sql = "UPDATE planning_mardi SET streamer=('$streamer') WHERE heure=('$heure')";
-				$sql2 = "UPDATE planning_mardi SET jeu=('$jeu') WHERE heure=('$heure')";	
+				$planning = "planning_mardi";
+				$today = "tuesday";
+				$auj = "mardi ";
 				break;
-				
+			
 			case 3:	
-				$sql = "UPDATE planning_mercredi SET streamer=('$streamer') WHERE heure=('$heure')";
-				$sql2 = "UPDATE planning_mercredi SET jeu=('$jeu') WHERE heure=('$heure')";
+				$planning = "planning_mercredi";
+				$today = "wednesday";
+				$auj = "mercredi ";
 				break;
-				
+			
 			case 4:
-				$sql = "UPDATE planning_jeudi SET streamer=('$streamer') WHERE heure=('$heure')";
-				$sql2 = "UPDATE planning_jeudi SET jeu=('$jeu') WHERE heure=('$heure')";
+				$planning = "planning_jeudi";
+				$today = "thursday";
+				$auj = "jeudi ";
 				break;				
-					
+				
 			case 5:
-				$sql = "UPDATE planning_vendredi SET streamer=('$streamer') WHERE heure=('$heure')";
-				$sql2 = "UPDATE planning_vendredi SET jeu=('$jeu') WHERE heure=('$heure')";
+				$planning = "planning_vendredi";
+				$today = "friday";
+				$auj = "vendredi ";
 				break;				
 					
 			case 6:
-				$sql = "UPDATE planning_samedi SET streamer=('$streamer') WHERE heure=('$heure')";
-				$sql2 = "UPDATE planning_samedi SET jeu=('$jeu') WHERE heure=('$heure')";
+				$planning = "planning_samedi";
+				$today = "saturday";
+				$auj = "samedi ";
 				break;				
-			
+				
 			case 7:
-				$sql = "UPDATE planning_dimanche SET streamer=('$streamer') WHERE heure=('$heure')";
-				$sql2 = "UPDATE planning_dimanche SET jeu=('$jeu') WHERE heure=('$heure')";
+				$planning = "planning_dimanche";
+				$today = "sunday";
+				$auj = "dimanche ";
 				break;
 		}
-		if ($conn->query($sql) === TRUE && $conn->query($sql2) === TRUE) {
-			echo "Les données ont ete mise à jour !";
-		} else {
-			echo "Erreur: " . $sql . "<br>" . $conn->error;
-			echo "Erreur: " . $sql2 . "<br>" . $conn->error;
+		
+		$sqlCheckStreamer = "SELECT streamer FROM $planning WHERE heure = $heure";
+		$sqlCheckJeu = "SELECT jeu FROM $planning WHERE heure = $heure";
+		
+		$resultStreamer = $conn->query($sqlCheckStreamer);
+		$rowStreamer = $resultStreamer->fetch_assoc();
+		
+		$resultJeu = $conn->query($sqlCheckJeu);
+		$rowJeu = $resultJeu->fetch_assoc();
+		
+		
+		if($rowStreamer['sreamer'] != $streamer && $rowJeu['jeu'] != $jeu)
+		{
+			$sqlUpdateStreamer = "UPDATE $planning SET streamer=('$streamer') WHERE heure=('$heure')";
+			$sqlUpdateJeu = "UPDATE $planning SET jeu=('$jeu') WHERE heure=('$heure')";
+		
+			if ($conn->query($sqlUpdateStreamer) === TRUE && $conn->query($sqlUpdateJeu) === TRUE) {
+				echo "Les données ont ete mise à jour !";
+			} else {
+				echo "Erreur: " . $sqlUpdateStreamer . "<br>" . $conn->error;
+				echo "Erreur: " . $sqlUpdateJeu . "<br>" . $conn->error;
+			}
+			
+			$heuretxt = $heures[$j];
+			$jour = date('d-m', strtotime($today.' this week'));
+			if($streamer == "LIBRE")
+			{
+				$txt .= '<br/><br/>Le '.$auj.$jour.' ce sera maintenant '.$streamer.' pour le créneau de '. $heuretxt;
+			} else {
+				$txt .= '<br/><br/>Le '.$auj.$jour.' ce sera maintenant '.$streamer.' pour le créneau de '. $heuretxt.' sur le jeu : '.$jeu;
+			}
+
 		}
 	}
 }
+
+$message = '<html><head></head><body><img src="" style="width:10%"/><br/><br/><u>Bonjour</u><br/>Les modifications ci-dessous viennent d\'être mise en ligne depuis l\'interface planning de la WebTV :<br/><br/><hr/>';
+$message.= $txt;
+$message.= '<br/><br/><hr/><br/><br/><strong>Ceci est un message automatique, c\'est donc inutile de répondre !</strong><br/>En cas de problème, veuillez contacter Khrys sur Discord ou par mail : louis.jeancolin@gmail.com</body></html>';
+$to      = 'louis.jeancolin@gmail.com';
+
+$subject = '[WebTV] Modification';
+
+$headers  = 'MIME-Version: 1.0' . "\r\n";
+$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+$headers .= 'From: ' . "\r\n" .
+			'Reply-To: ' . "\r\n" .
+			'X-Mailer: PHP/' . phpversion();
+			
+mail($to, $subject, $message, $headers);
 
 $conn->close();
 header('Location: '.$mainurl);
