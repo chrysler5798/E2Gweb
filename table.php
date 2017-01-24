@@ -152,117 +152,19 @@
 		<th>Dimanche</th> 
 	  </tr>
 	  <form name="form" action="db_maj.php" method="post">
-	  <tr>
-		<td class="heure">08H-09H</td>
-		<?php
-			montrerChaqueJour(809);
-		?>
-	  </tr> 
 	  
-	  <tr>
-		<td class="heure">09H-10H</td>
-		<?php
-			montrerChaqueJour(910);
-		?>
-	  </tr>	 
-	  
-	  <tr>
-		<td class="heure">10H-11H</td>
-		<?php
-			montrerChaqueJour(1011);
-		?>
-	  </tr>	
-	  
-	  <tr>
-		<td class="heure">11H-12H</td>
-		<?php
-			montrerChaqueJour(1112);
-		?>
-	  </tr>	  
-	  
-	  <tr>
-		<td class="heure">12H-13H</td>
-		<?php
-			montrerChaqueJour(1213);
-		?>
-	  </tr>	  
-	  
-	  <tr>
-		<td class="heure">13H-14H</td>
-		<?php
-			montrerChaqueJour(1314);
-		?>
-	  </tr>	  
-	  
-	  <tr>
-		<td class="heure">14H-15H</td>
-		<?php
-			montrerChaqueJour(1415);
-		?>
-	  </tr>	  
-	  
-	  <tr>
-		<td class="heure">15H-16H</td>
-		<?php
-			montrerChaqueJour(1516);
-		?>
-	  </tr>	  
-	  
-	  <tr>
-		<td class="heure">16H-17H</td>
-		<?php
-			montrerChaqueJour(1617);
-		?>
-	  </tr>	  
-	  
-	  <tr>
-		<td class="heure">17H-18H</td>
-		<?php
-			montrerChaqueJour(1718);
-		?>
-	  </tr>	
-	  
-	  <tr>
-		<td class="heure">18H-19H</td>
-		<?php
-			montrerChaqueJour(1819);
-		?>
-	  </tr>	  
-	  
-	  <tr>
-		<td class="heure">19H-20H</td>	
-		<?php
-			montrerChaqueJour(1920);
-		?>
-	  </tr>	  
-	  
-	  <tr>
-		<td class="heure">20H-21H</td>
-		<?php
-			montrerChaqueJour(2021);
-		?>
-	  </tr>	  
-	  
-	  <tr>
-		<td class="heure">21H-22H</td>
-		<?php
-			montrerChaqueJour(2122);
-		?>
-	  </tr>	
-	  
-	  <tr>
-		<td class="heure">22H-23H</td>
-		<?php
-			montrerChaqueJour(2223);
-		?>
-	  </tr>	  
-	  
-	  <tr>
-		<td class="heure">23H-00H</td>	
-		<?php
-			montrerChaqueJour(2300);
-		?>
-	  </tr>
+	  <?php 
+		include 'var.php';
+		
+		for($i = 0; $i < 16; $i++)
+		{
+			echo "<tr>";
+			echo '<td class="heure">'.$heures[$i].'</td>';
+			montrerChaqueJour($heuresbrut[$i]);
+			echo "</tr>";
+		}
+	  ?> 
+		
 	 
 	</table>
 	

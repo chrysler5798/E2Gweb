@@ -1,6 +1,7 @@
 <?php
 
 include 'db_connect.php';
+include 'var.php';
 
 if ($conn->connect_error)
 {

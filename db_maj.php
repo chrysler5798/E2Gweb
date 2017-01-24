@@ -1,14 +1,13 @@
 <?php
 
 include 'db_connect.php';
+include 'var.php';
 
 if ($conn->connect_error)
 {
     die("Erreur de connexion a la DB: " . $conn->connect_error);
 } 
 
-$heuresbrut = array(809, 910, 1011, 1112, 1213, 1314, 1415, 1516, 1617, 1718, 1819, 1920, 2021, 2122, 2223, 2300);
-$heures = array("08H-09H","09H-10H","10H-11H","11H-12H","12H-13H","13H-14H","14H-15H","15H-16H","16H-17H","17H-18H","18H-19H","19H-20H","20H-21H","21H-22H","22H-23H","23H-00H");
 $txt = "";
 
 for($i = 1; $i <= 7; $i++)
@@ -99,7 +98,7 @@ for($i = 1; $i <= 7; $i++)
 	}
 }
 
-$message = '<html><head></head><body><img src="" style="width:10%"/><br/><br/><u>Bonjour</u><br/>Les modifications ci-dessous viennent d\'être mise en ligne depuis l\'interface planning de la WebTV :<br/><br/><hr/>';
+$message = '<html><head></head><body><img src="http://164.132.145.12/e2gstream/e2glogo.png" style="width:10%"/><br/><br/><u>Bonjour</u><br/>Les modifications ci-dessous viennent d\'être mise en ligne depuis l\'interface planning de la WebTV :<br/><br/><hr/>';
 $message.= $txt;
 $message.= '<br/><br/><hr/><br/><br/><strong>Ceci est un message automatique, c\'est donc inutile de répondre !</strong><br/>En cas de problème, veuillez contacter Khrys sur Discord ou par mail : louis.jeancolin@gmail.com</body></html>';
 $to      = 'louis.jeancolin@gmail.com';
@@ -108,8 +107,8 @@ $subject = '[WebTV] Modification';
 
 $headers  = 'MIME-Version: 1.0' . "\r\n";
 $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-$headers .= 'From: ' . "\r\n" .
-			'Reply-To: ' . "\r\n" .
+$headers .= 'From: 164.132.145.12' . "\r\n" .
+			'Reply-To: 164.132.145.12' . "\r\n" .
 			'X-Mailer: PHP/' . phpversion();
 			
 mail($to, $subject, $message, $headers);
