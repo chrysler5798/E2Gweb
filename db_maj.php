@@ -98,7 +98,7 @@ for($i = 1; $i <= 7; $i++)
 	}
 }
 
-$message = '<html><head></head><body><img src="http://164.132.145.12/e2gstream/e2glogo.png" style="width:10%"/><br/><br/><u>Bonjour</u><br/>Les modifications ci-dessous viennent d\'être mise en ligne depuis l\'interface planning de la WebTV :<br/><br/><hr/>';
+$message = '<html><head></head><body><img src="'.$imge2g.'" style="width:10%"/><br/><br/><u>Bonjour</u><br/>Les modifications ci-dessous viennent d\'être mise en ligne depuis l\'interface planning de la WebTV :<br/><br/><hr/>';
 $message.= $txt;
 $message.= '<br/><br/><hr/><br/><br/><strong>Ceci est un message automatique, c\'est donc inutile de répondre !</strong><br/>En cas de problème, veuillez contacter Khrys sur Discord ou par mail : louis.jeancolin@gmail.com</body></html>';
 $to      = 'louis.jeancolin@gmail.com';
@@ -107,8 +107,8 @@ $subject = '[WebTV] Modification';
 
 $headers  = 'MIME-Version: 1.0' . "\r\n";
 $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-$headers .= 'From: 164.132.145.12' . "\r\n" .
-			'Reply-To: 164.132.145.12' . "\r\n" .
+$headers .= 'From:'. $ipmail . "\r\n" .
+			'Reply-To:'. $ipmail . "\r\n" .
 			'X-Mailer: PHP/' . phpversion();
 			
 mail($to, $subject, $message, $headers);
